@@ -37,7 +37,7 @@ export default function Landing() {
           fontSize: '1.5rem',
           margin: 0
         }}>
-          Continuous AI for explorers
+          Math that drills
         </p>
         
         <button

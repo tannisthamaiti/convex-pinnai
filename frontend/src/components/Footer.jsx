@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-content">
        
-        <p>Copyright © {currentYear} Earthscan. All rights reserved.</p>
+        <p>Copyright © {currentYear} Pinn AI. All rights reserved.</p>
       </div>
     </footer>
   );
