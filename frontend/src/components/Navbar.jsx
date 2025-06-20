@@ -32,12 +32,12 @@ export default function Navbar() {
         >
           Select Data
         </button>
-         {/* <button 
+         <button 
           className={`nav-link ${location.pathname === '/roi' ? 'active' : ''}`}
           onClick={() => navigate('/roi')}
         >
           ROI Calculator
-        </button> */}
+        </button>
       </div>
     </nav>
   );
