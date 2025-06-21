@@ -184,38 +184,123 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card className="mb-6 shadow-lg">
-          <CardHeader title={<Typography variant="h6" className="text-blue-800">Data Inspection and Inference</Typography>} />
-          <CardContent>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6} md={3}>
-                <Paper onClick={handleShowMap} className="p-6 text-center cursor-pointer bg-gradient-to-br from-blue-50 to-blue-100">
-                  <Map className="text-blue-600 mb-3" fontSize="large" />
-                  <Typography className="text-blue-800 font-semibold">Inference</Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
-                <Paper onClick={() => window.open("/digital-twin", "_blank")} className="p-6 text-center cursor-pointer bg-gradient-to-br from-green-50 to-green-100">
-                  <TrendingUp className="text-green-600 mb-3" fontSize="large" />
-                  <Typography className="text-green-800 font-semibold">Production Results</Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
-                <Paper onClick={() => window.open("/voxel", "_blank")} className="p-6 text-center cursor-pointer bg-gradient-to-br from-yellow-50 to-yellow-100">
-                  <FlashOn className="text-yellow-600 mb-3" fontSize="large" />
-                  <Typography className="text-yellow-800 font-semibold">Supervised Analysis</Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
-                <Paper onClick={handleAskImage} className="p-6 text-center cursor-pointer bg-gradient-to-br from-purple-50 to-purple-100">
-                  <Visibility className="text-purple-600 mb-3" fontSize="large" />
-                  <Typography className="text-purple-800 font-semibold">Vug Analysis</Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
+        <Card className="mb-6 shadow-sm">
+  <CardContent>
+    <Grid container spacing={3}>
+      <Grid item xs={12} md={6}>
+        <Paper
+          onClick={handleShowMap}
+          elevation={0}
+          sx={{
+            p: 3,
+            borderRadius: 2,
+            border: '1px solid #000',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            cursor: 'pointer',
+            minHeight: 120,
+            backgroundColor: '#fff',
+          }}
+        >
+          <Map sx={{ fontSize: 40, color: '#000' }} />
+          <Box>
+            <Typography variant="h6" sx={{ fontWeight: 600, color: '#000' }}>
+              Pattern Recognition
+            </Typography>
+            <Typography variant="body2" sx={{ color: '#333' }}>
+              Detects spatial and temporal similarities across wells.
+            </Typography>
+          </Box>
+        </Paper>
+      </Grid>
 
+      <Grid item xs={12} md={6}>
+        <Paper
+          onClick={() => window.open("/digital-twin", "_blank")}
+          elevation={0}
+          sx={{
+            p: 3,
+            borderRadius: 2,
+            border: '1px solid #000',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            cursor: 'pointer',
+            minHeight: 120,
+            backgroundColor: '#fff',
+          }}
+        >
+          <TrendingUp sx={{ fontSize: 40, color: '#000' }} />
+          <Box>
+            <Typography variant="h6" sx={{ fontWeight: 600, color: '#000' }}>
+              Production Results
+            </Typography>
+            <Typography variant="body2" sx={{ color: '#333' }}>
+              Visualize simulated output from digital twin models.
+            </Typography>
+          </Box>
+        </Paper>
+      </Grid>
+
+      <Grid item xs={12} md={6}>
+        <Paper
+          onClick={() => window.open("/voxel", "_blank")}
+          elevation={0}
+          sx={{
+            p: 3,
+            borderRadius: 2,
+            border: '1px solid #000',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            cursor: 'pointer',
+            minHeight: 120,
+            backgroundColor: '#fff',
+          }}
+        >
+          <FlashOn sx={{ fontSize: 40, color: '#000' }} />
+          <Box>
+            <Typography variant="h6" sx={{ fontWeight: 600, color: '#000' }}>
+              Supervised Analysis
+            </Typography>
+            <Typography variant="body2" sx={{ color: '#333' }}>
+              Train models to classify and predict reservoir behavior.
+            </Typography>
+          </Box>
+        </Paper>
+      </Grid>
+
+      <Grid item xs={12} md={6}>
+        <Paper
+          onClick={handleAskImage}
+          elevation={0}
+          sx={{
+            p: 3,
+            borderRadius: 2,
+            border: '1px solid #000',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            cursor: 'pointer',
+            minHeight: 120,
+            backgroundColor: '#fff',
+          }}
+        >
+          <Visibility sx={{ fontSize: 40, color: '#000' }} />
+          <Box>
+            <Typography variant="h6" sx={{ fontWeight: 600, color: '#000' }}>
+              Vug Analysis
+            </Typography>
+            <Typography variant="body2" sx={{ color: '#333' }}>
+              Interpret porous zones using AI-enhanced visual inference.
+            </Typography>
+          </Box>
+        </Paper>
+      </Grid>
+    </Grid>
+  </CardContent>
+</Card>
         <div className="fixed bottom-6 left-6">
           <Button
             variant="contained"
