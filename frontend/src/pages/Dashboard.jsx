@@ -234,7 +234,7 @@ export default function Dashboard() {
           <TrendingUp sx={{ fontSize: 40, color: '#000' }} />
           <Box>
             <Typography variant="h6" sx={{ fontWeight: 600, color: '#000' }}>
-              Production Results
+              Sensitivity Report
             </Typography>
             <Typography variant="body2" sx={{ color: '#333' }}>
               Visualize simulated output from digital twin models.
