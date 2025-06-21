@@ -1,11 +1,40 @@
-import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import ModelTrainingModal from '../components/ModelTrainingModal';
-import ConvexChat from './ConvexChat'; // ✅ Make sure this path is correct
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ModelTrainingModal from "../components/ModelTrainingModal";
+import ConvexChat from "./ConvexChat";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  Grid,
+  Paper,
+  Chip,
+  Divider,
+  Box
+} from "@mui/material";
+import {
+  PlayArrow,
+  Settings,
+  BarChart,
+  Map,
+  FlashOn,
+  Visibility,
+  Chat,
+  TrendingUp,
+  Storage,
+  Computer,
+  Description,
+} from "@mui/icons-material";
 
 function formatTimestamped(message) {
   const now = new Date();
-  return `${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })} - ${message}`;
+  return `${now.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  })} - ${message}`;
 }
 
 export default function Dashboard() {
@@ -15,7 +44,7 @@ export default function Dashboard() {
   const [pipelineLogs, setPipelineLogs] = useState([]);
   const [showTrainingModal, setShowTrainingModal] = useState(false);
   const [clusters, setClusters] = useState(3);
-  const [showChat, setShowChat] = useState(false); // ✅ toggle chat
+  const [showChat, setShowChat] = useState(false);
 
   useEffect(() => {
     console.log("🔧 Cluster state updated to:", clusters);
@@ -23,7 +52,7 @@ export default function Dashboard() {
 
   const handleModelSelect = async (type) => {
     setShowTrainingModal(false);
-    if (type === 'unsupervised') {
+    if (type === "unsupervised") {
       await handleROICalculate(clusters);
     }
   };
@@ -34,178 +63,185 @@ export default function Dashboard() {
   const handleROICalculate = async (clusterValue = clusters) => {
     setShowProcessing(true);
     setPipelineLogs([
-      formatTimestamped('Files uploaded to folder.'),
-      formatTimestamped('Ingestion Agent triggered.'),
-      formatTimestamped('Extracting Formation Tops...'),
+      formatTimestamped("Files uploaded to folder."),
+      formatTimestamped("Ingestion Agent triggered."),
+      formatTimestamped("Extracting Formation Tops..."),
     ]);
 
     try {
-      const response = await fetch('https://etscan.org/merge-well-formation');
+      const response = await fetch("https://etscan.org/merge-well-formation");
       const data = await response.json();
 
-      if (data.status === 'success') {
-        setPipelineLogs(prev => [
+      if (data.status === "success") {
+        setPipelineLogs((prev) => [
           ...prev,
           formatTimestamped(`✅ Formation Tops extracted. Rows: ${data.rows}`),
           formatTimestamped(`📁 Output File: ${data.output}`),
-          formatTimestamped('🧠 Triggering PCA Cluster...'),
+          formatTimestamped("🧠 Triggering PCA Cluster..."),
         ]);
 
-        const pcaResponse = await fetch('https://etscan.org/sparsity-check', { method: 'POST' });
+        const pcaResponse = await fetch("https://etscan.org/sparsity-check", {
+          method: "POST",
+        });
         const pcaData = await pcaResponse.json();
 
         if (pcaResponse.ok && pcaData.result) {
-          setPipelineLogs(prev => [
+          setPipelineLogs((prev) => [
             ...prev,
             formatTimestamped(`Filtered data complete: ${pcaData.result}`),
             formatTimestamped(`Generating PCA plot on ${clusterValue} clusters`),
           ]);
 
-          const plotResponse = await fetch('https://etscan.org/pca-plot/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+          const plotResponse = await fetch("https://etscan.org/pca-plot/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ cluster_number: clusterValue }),
           });
 
           const plotData = await plotResponse.json();
 
-          if (plotResponse.ok && plotData.status === 'success') {
-            setPipelineLogs(prev => [
+          if (plotResponse.ok && plotData.status === "success") {
+            setPipelineLogs((prev) => [
               ...prev,
               formatTimestamped(`✅ ${plotData.message}`),
               formatTimestamped(`🖼️ Plot Path: ${plotData.plot_path}`),
             ]);
+            setProcessingResult(plotData.result || null);
           } else {
-            setPipelineLogs(prev => [
+            setPipelineLogs((prev) => [
               ...prev,
               formatTimestamped(`⚠️ PCA plot generation failed: ${JSON.stringify(plotData)}`),
             ]);
           }
         } else {
-          setPipelineLogs(prev => [
+          setPipelineLogs((prev) => [
             ...prev,
             formatTimestamped(`⚠️ Filtered data failed: ${JSON.stringify(pcaData)}`),
           ]);
         }
       } else {
-        setPipelineLogs(prev => [
+        setPipelineLogs((prev) => [
           ...prev,
           formatTimestamped(`API responded with status: ${data.status}`),
         ]);
       }
     } catch (error) {
-      setPipelineLogs(prev => [
+      setPipelineLogs((prev) => [
         ...prev,
         formatTimestamped(`❌ API request failed: ${error.message}`),
       ]);
     }
-  };
-
-  const handleProcessingComplete = (finalData) => {
-    setProcessingResult(finalData);
     setShowProcessing(false);
   };
 
   return (
-    <div style={{ fontFamily: 'Segoe UI, sans-serif', background: '#f5f8fc', padding: '2rem' }}>
-      <div style={{ maxWidth: '1000px', margin: 'auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '1rem', fontSize: '1.8rem', fontWeight: 600 }}>
-          File Summary and Mapping of Wells
-        </div>
+    <div className="min-h-screen bg-gray-50 p-4">
+      <div className="max-w-7xl mx-auto">
+        <Typography variant="h4" className="text-blue-800 font-bold mb-4">
+          Well Data Analysis Dashboard
+        </Typography>
 
-        <div style={{ display: 'flex', gap: '2rem', marginBottom: '2rem' }}>
-          <div style={{ flex: 1, background: 'white', padding: '1rem', borderRadius: '10px', boxShadow: '0 0 5px rgba(0,0,0,0.1)', textAlign: 'left' }}>
-            <h3>Build Logs</h3>
-            <button
-              onClick={() => handleROICalculate()}
-              style={{
-                padding: '0.5rem 1rem',
-                backgroundColor: '#1976d2',
-                color: 'white',
-                border: 'none',
-                borderRadius: '5px',
-                marginBottom: '1rem'
-              }}
-            >
-              Data Processing
-            </button>
-            <button
-              onClick={() => setShowTrainingModal(true)}
-              style={{
-                padding: '0.5rem 1rem',
-                backgroundColor: '#1976d2',
-                color: 'white',
-                border: 'none',
-                borderRadius: '5px',
-                marginBottom: '1rem',
-                marginLeft: '1rem'
-              }}
-            >
-              Model Training
-            </button>
+        <Card className="mb-6 shadow-lg">
+          <CardHeader
+            title={<div className="flex items-center gap-2 text-blue-800"><BarChart /> Build Logs & Processing</div>}
+          />
+          <CardContent>
+            <Box display="flex" gap={2} mb={2}>
+              <Button
+                variant="contained"
+                startIcon={<PlayArrow />}
+                onClick={() => handleROICalculate()}
+                disabled={showProcessing}
+              >
+                {showProcessing ? "Processing..." : "Data Processing"}
+              </Button>
+              <Button
+                variant="outlined"
+                startIcon={<Settings />}
+                onClick={() => setShowTrainingModal(true)}
+              >
+                Model Training
+              </Button>
+            </Box>
 
             {pipelineLogs.length > 0 && (
-              <div style={{ marginTop: '1rem', backgroundColor: '#f9f9f9', padding: '1rem', borderRadius: '6px', border: '1px solid #ddd' }}>
-                <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Pipeline Status</div>
+              <Box bgcolor="#f9f9f9" p={2} borderRadius={2} border="1px solid #ddd" mb={2}>
+                <Typography variant="subtitle1" fontWeight={600} gutterBottom>Pipeline Status</Typography>
                 {pipelineLogs.map((log, idx) => (
-                  <div key={idx}>{log}</div>
+                  <Typography key={idx} variant="body2">{log}</Typography>
                 ))}
-              </div>
+              </Box>
             )}
 
             {processingResult && (
-              <div style={{ marginTop: '1rem', backgroundColor: '#f9f9f9', padding: '1rem', borderRadius: '6px', border: '1px solid #ddd' }}>
-                <div><strong>Total Wells:</strong> {processingResult.wells}</div>
-                <div><strong>Log Types:</strong> {processingResult.logs.join(', ')}</div>
-                <div><strong>Composite Index:</strong> {processingResult.index}</div>
-                <div><strong>Data Source:</strong> {processingResult.source}</div>
-              </div>
+              <Box bgcolor="#f0fdf4" p={2} borderRadius={2} border="1px solid #c6f6d5">
+                <Typography variant="subtitle1" fontWeight={600} gutterBottom>Processing Result</Typography>
+                {Object.entries(processingResult).map(([key, value]) => (
+                  <Typography key={key} variant="body2"><strong>{key}:</strong> {Array.isArray(value) ? value.join(", ") : value}</Typography>
+                ))}
+              </Box>
             )}
+          </CardContent>
+        </Card>
+
+        <Card className="mb-6 shadow-lg">
+          <CardHeader title={<Typography variant="h6" className="text-blue-800">Data Inspection and Inference</Typography>} />
+          <CardContent>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper onClick={handleShowMap} className="p-6 text-center cursor-pointer bg-gradient-to-br from-blue-50 to-blue-100">
+                  <Map className="text-blue-600 mb-3" fontSize="large" />
+                  <Typography className="text-blue-800 font-semibold">Inference</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper onClick={() => window.open("/digital-twin", "_blank")} className="p-6 text-center cursor-pointer bg-gradient-to-br from-green-50 to-green-100">
+                  <TrendingUp className="text-green-600 mb-3" fontSize="large" />
+                  <Typography className="text-green-800 font-semibold">Production Results</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper onClick={() => window.open("/voxel", "_blank")} className="p-6 text-center cursor-pointer bg-gradient-to-br from-yellow-50 to-yellow-100">
+                  <FlashOn className="text-yellow-600 mb-3" fontSize="large" />
+                  <Typography className="text-yellow-800 font-semibold">Supervised Analysis</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper onClick={handleAskImage} className="p-6 text-center cursor-pointer bg-gradient-to-br from-purple-50 to-purple-100">
+                  <Visibility className="text-purple-600 mb-3" fontSize="large" />
+                  <Typography className="text-purple-800 font-semibold">Vug Analysis</Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+
+        <div className="fixed bottom-6 left-6">
+          <Button
+            variant="contained"
+            startIcon={<Chat />}
+            onClick={() => setShowChat(!showChat)}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-lg"
+          >
+            Chat Now!
+          </Button>
+        </div>
+
+        {showChat && (
+          <div className="fixed bottom-24 left-6 z-40">
+            <ConvexChat />
           </div>
-        </div>
+        )}
 
-        <div style={{ background: 'white', padding: '1.5rem', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', textAlign: 'center' }}>
-          <h3>Data Inspection and Inference</h3>
-          <p>Your files are being processed and analyzed.</p>
-          <button onClick={handleShowMap} style={{ margin: '0.5rem', padding: '0.5rem 1rem', minWidth: '200px', backgroundColor: '#1e88e5', color: 'white', border: 'none', borderRadius: '4px' }}> Inference</button>
-          <button onClick={() => window.open("/digital-twin", "_blank")} style={{ margin: '0.5rem', padding: '0.5rem 1rem', minWidth: '200px', backgroundColor: '#1e88e5', color: 'white', border: 'none', borderRadius: '4px' }}>Production Results</button>
-          <button onClick={() => window.open("/voxel", "_blank")} style={{ margin: '0.5rem', padding: '0.5rem 1rem', minWidth: '200px', backgroundColor: '#1e88e5', color: 'white', border: 'none', borderRadius: '4px' }}>Supervised Analysis</button>
-          <button onClick={handleAskImage} style={{ margin: '0.5rem', padding: '0.5rem 1rem', minWidth: '200px', backgroundColor: '#2e7d32', color: 'white', border: 'none', borderRadius: '4px' }}>Vug Analysis</button>
-        </div>
+        {showTrainingModal && (
+          <ModelTrainingModal
+            onClose={() => setShowTrainingModal(false)}
+            onSelect={handleModelSelect}
+            clusters={clusters}
+            setClusters={setClusters}
+          />
+        )}
       </div>
-
-      {showTrainingModal && (
-        <ModelTrainingModal
-          onClose={() => setShowTrainingModal(false)}
-          onSelect={handleModelSelect}
-          clusters={clusters}
-          setClusters={setClusters}
-        />
-      )}
-
-      {/* ✅ Floating Chat Button */}
-      <button
-        onClick={() => setShowChat(!showChat)}
-        style={{
-          position: 'fixed',
-          bottom: '20px',
-          right: '20px',
-          backgroundColor: '#FFBF00',
-          color: '#000',
-          padding: '12px 20px',
-          border: 'none',
-          borderRadius: '50px',
-          fontWeight: 'bold',
-          cursor: 'pointer',
-          boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-          zIndex: 1000
-        }}
-      >
-        Chat Now!
-      </button>
-
-      {/* ✅ Show chat only when toggled */}
-      {showChat && <ConvexChat />}
     </div>
   );
 }
