@@ -262,10 +262,10 @@ export default function Dashboard() {
           <FlashOn sx={{ fontSize: 40, color: '#000' }} />
           <Box>
             <Typography variant="h6" sx={{ fontWeight: 600, color: '#000' }}>
-              Supervised Analysis
+              Well Planning Insights
             </Typography>
             <Typography variant="body2" sx={{ color: '#333' }}>
-              Train models to classify and predict reservoir behavior.
+              Guides drilling with formation and production analysis.
             </Typography>
           </Box>
         </Paper>
