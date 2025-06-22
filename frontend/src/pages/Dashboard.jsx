@@ -220,16 +220,23 @@ export default function Dashboard() {
                   onClick={handleShowMap}
                   elevation={0}
                   sx={{
-                    p: 3,
-                    borderRadius: 2,
-                    border: "1px solid #000",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                    cursor: "pointer",
-                    minHeight: 120,
-                    backgroundColor: "#fff",
-                  }}
+                  p: 3,
+                  borderRadius: 2,
+                  backgroundColor: "#fff",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  cursor: "pointer",
+                  minHeight: 120,
+                  boxShadow: 2,
+                  transition: "all 0.3s ease-in-out",
+                  "&:hover": {
+                    boxShadow: 6,
+                    transform: "scale(1.02)",
+                    backgroundColor: "#f9f9f9",
+                  },
+                }}
+
                 >
                   <Map sx={{ fontSize: 40, color: "#000" }} />
                   <Box>
@@ -248,16 +255,23 @@ export default function Dashboard() {
                   onClick={() => window.open("/digital-twin", "_blank")}
                   elevation={0}
                   sx={{
-                    p: 3,
-                    borderRadius: 2,
-                    border: "1px solid #000",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                    cursor: "pointer",
-                    minHeight: 120,
-                    backgroundColor: "#fff",
-                  }}
+                  p: 3,
+                  borderRadius: 2,
+                  backgroundColor: "#fff",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  cursor: "pointer",
+                  minHeight: 120,
+                  boxShadow: 2,
+                  transition: "all 0.3s ease-in-out",
+                  "&:hover": {
+                    boxShadow: 6,
+                    transform: "scale(1.02)",
+                    backgroundColor: "#f9f9f9",
+                  },
+                }}
+
                 >
                   <TrendingUp sx={{ fontSize: 40, color: "#000" }} />
                   <Box>
@@ -276,16 +290,23 @@ export default function Dashboard() {
                   onClick={() => window.open("/voxel", "_blank")}
                   elevation={0}
                   sx={{
-                    p: 3,
-                    borderRadius: 2,
-                    border: "1px solid #000",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                    cursor: "pointer",
-                    minHeight: 120,
-                    backgroundColor: "#fff",
-                  }}
+                  p: 3,
+                  borderRadius: 2,
+                  backgroundColor: "#fff",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  cursor: "pointer",
+                  minHeight: 120,
+                  boxShadow: 2,
+                  transition: "all 0.3s ease-in-out",
+                  "&:hover": {
+                    boxShadow: 6,
+                    transform: "scale(1.02)",
+                    backgroundColor: "#f9f9f9",
+                  },
+                }}
+
                 >
                   <FlashOn sx={{ fontSize: 40, color: "#000" }} />
                   <Box>
@@ -304,16 +325,23 @@ export default function Dashboard() {
                   onClick={handleAskImage}
                   elevation={0}
                   sx={{
-                    p: 3,
-                    borderRadius: 2,
-                    border: "1px solid #000",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                    cursor: "pointer",
-                    minHeight: 120,
-                    backgroundColor: "#fff",
-                  }}
+                  p: 3,
+                  borderRadius: 2,
+                  backgroundColor: "#fff",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  cursor: "pointer",
+                  minHeight: 120,
+                  boxShadow: 2,
+                  transition: "all 0.3s ease-in-out",
+                  "&:hover": {
+                    boxShadow: 6,
+                    transform: "scale(1.02)",
+                    backgroundColor: "#f9f9f9",
+                  },
+                }}
+
                 >
                   <Visibility sx={{ fontSize: 40, color: "#000" }} />
                   <Box>
