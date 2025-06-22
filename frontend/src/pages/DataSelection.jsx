@@ -1,220 +1,307 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+"use client";
+
+import { useState, useEffect } from "react";
+import {
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  IconButton,
+  Menu,
+  MenuItem,
+  Box,
+  Avatar,
+  Divider,
+} from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import UploadForm from "./upload-form";
+
+const theme = createTheme({
+  palette: {
+    primary: { main: "#1976d2" },
+    secondary: { main: "#f50057" },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
+          textTransform: "none",
+          fontWeight: 600,
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 16,
+          boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+          transition: "all 0.3s ease",
+          "&:hover": {
+            transform: "translateY(-4px)",
+            boxShadow: "0 8px 30px rgba(0,0,0,0.12)",
+          },
+        },
+      },
+    },
+  },
+});
 
 export default function DataSelection() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState('');
-  const [uploadedFiles, setUploadedFiles] = useState([]);
-  const navigate = useNavigate();
-
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
-
-  const uploadFile = async () => {
-    const fileInput = document.getElementById("fileInput");
-    const fileTypeSelect = document.getElementById("fileTypeSelect");
-
-    if (!fileInput.files.length) {
-      setUploadStatus("Please choose a file.");
-      return;
-    }
-
-    const file = fileInput.files[0];
-    const fileType = fileTypeSelect.value;
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("file_type", fileType);
-
-    try {
-      const res = await fetch("http://165.22.228.32:8000/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (res.ok) {
-        setUploadStatus("Upload successful.");
-        const newFile = await res.json();
-        setUploadedFiles(prev => [...prev, newFile]);
-        closeModal(); // Optional: close modal after upload
-      } else {
-        setUploadStatus("Upload failed.");
-      }
-    } catch {
-      setUploadStatus("Upload failed.");
-    }
-  };
+  const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadedFiles, setUploadedFiles] = useState([
+    {
+      id: 1,
+      filename: "Well_Log_1.csv",
+      file_type: "Well Data",
+      size: 2.3 * 1024 * 1024,
+      uploadDate: "2024-01-15",
+      description: "Primary well logging data from site A-1",
+      status: "processed",
+    },
+    {
+      id: 2,
+      filename: "Well_Summary.pdf",
+      file_type: "Well Data",
+      size: 1.8 * 1024 * 1024,
+      uploadDate: "2024-01-15",
+      description: "Comprehensive well analysis report",
+      status: "ready",
+    },
+    {
+      id: 3,
+      filename: "Seismic_Map_Inline.seg",
+      file_type: "Seismic",
+      size: 45.2 * 1024 * 1024,
+      uploadDate: "2024-01-14",
+      description: "Inline seismic survey data - Block 7",
+      status: "processing",
+    },
+    {
+      id: 4,
+      filename: "Seismic_Attribute_Report.docx",
+      file_type: "Seismic",
+      size: 3.1 * 1024 * 1024,
+      uploadDate: "2024-01-14",
+      description: "Detailed seismic attribute analysis",
+      status: "ready",
+    },
+  ]);
 
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const res = await fetch("http://165.22.228.32:8000/files");
-        const data = await res.json();
-        setUploadedFiles(data);
-      } catch (err) {
-        console.error("Failed to fetch files", err);
+        const res = await fetch("https://etscan.org/files");
+        const responseText = await res.text();
+        console.log("Files fetch response:", responseText);
+        if (res.ok) {
+          const data = JSON.parse(responseText);
+          setUploadedFiles((prev) => [...prev, ...data]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch uploaded files", error);
       }
     };
     fetchFiles();
   }, []);
 
+  const handleUpload = async (fileData) => {
+    const formData = new FormData();
+    formData.append("file", fileData.file);
+    formData.append("file_type", fileData.fileType);
+
+    try {
+      const res = await fetch("https://etscan.org/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const responseText = await res.text();
+      console.log("Upload response:", responseText);
+
+      if (res.ok) {
+        const newFile = JSON.parse(responseText);
+        const formattedFile = {
+          id: uploadedFiles.length + 1,
+          filename: newFile.filename,
+          file_type: newFile.type || newFile.file_type,
+          size: newFile.size || 0,
+          uploadDate: new Date().toISOString().split("T")[0],
+          description: newFile.description || "Recently uploaded file",
+          status: "processing",
+        };
+        setUploadedFiles((prev) => [...prev, formattedFile]);
+      } else {
+        console.error("Upload failed");
+      }
+    } catch (err) {
+      console.error("Upload error:", err);
+    }
+  };
+
+  const handleMenuClick = (event, file) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedFile(file);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setSelectedFile(null);
+  };
+
+  const getFileIcon = (fileName) => {
+    if (!fileName) return { emoji: "📁", color: "#6b7280" };
+    const extension = fileName.split(".").pop().toLowerCase();
+    const icons = {
+      csv: { emoji: "📊", color: "#10b981" },
+      pdf: { emoji: "📄", color: "#ef4444" },
+      seg: { emoji: "🌊", color: "#8b5cf6" },
+      docx: { emoji: "📝", color: "#3b82f6" },
+      xlsx: { emoji: "📈", color: "#059669" },
+    };
+    return icons[extension] || { emoji: "📁", color: "#6b7280" };
+  };
+
+  const getStatusColor = (status) => {
+    const colors = {
+      ready: "success",
+      processing: "warning",
+      processed: "info",
+      error: "error",
+    };
+    return colors[status] || "default";
+  };
+
+  const groupedFiles = uploadedFiles.reduce((acc, file) => {
+    const category = file.file_type === "Seismic" ? "Seismic Data" : "Well Data";
+    if (!acc[category]) acc[category] = [];
+    acc[category].push(file);
+    return acc;
+  }, {});
   return (
-    <div className="data-selection-container">
-      {/* Sidebar */}
-      <div className="data-sidebar">
-        <h2>Data Selection</h2>
-        <button className="data-upload-btn" onClick={openModal}>
-          Upload Well Data Files
-          <span className="icon">+</span>
-        </button>
-        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-          <button className="button" onClick={() => navigate('/dashboard')}>
-            Continue to Dashboard
-          </button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="data-main-content">
-        <div className="data-section">
-          <h3>Well Data</h3>
-          <div className="data-file-card">Well_Log_1.csv</div>
-          <div className="data-file-card">Well_Summary.pdf</div>
-          {uploadedFiles.filter(f => f.type === "Well Data").map((f, i) => (
-            <div key={i} className="data-file-card">{f.filename}</div>
-          ))}
-        </div>
-
-        <div className="data-section">
-          <h3>Seismic Data</h3>
-          <div className="data-file-card">Seismic_Map_Inline.seg</div>
-          <div className="data-file-card">Seismic_Attribute_Report.docx</div>
-          {uploadedFiles.filter(f => f.type === "Seismic").map((f, i) => (
-            <div key={i} className="data-file-card">{f.filename}</div>
-          ))}
-        </div>
-      </div>
-
-      {/* Modal */}
-      {modalOpen && (
-        <div className="data-modal-overlay" style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          background: 'rgba(0, 0, 0, 0.4)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-          paddingTop: '5rem',
-          zIndex: 1000
-        }}>
-          <div className="data-modal" style={{
-            position: 'relative',
-            background: '#fff',
-            padding: '2rem',
-            width: '600px',
-            maxWidth: '95%',
-            borderRadius: '8px',
-            boxShadow: '0 5px 25px rgba(0, 0, 0, 0.2)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem',
-            fontSize: '1rem'
-          }}>
-            <span
-              onClick={closeModal}
-              style={{
-                position: 'absolute',
-                top: '1rem',
-                right: '1rem',
-                fontSize: '1.5rem',
-                cursor: 'pointer',
-                color: '#444',
+    <ThemeProvider theme={theme}>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+        <Box className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div>
+              <Typography variant="h4" className="font-bold text-gray-800">
+                Data Management
+              </Typography>
+              <Typography variant="body1" className="text-gray-600 mt-1">
+                Upload and manage your geological data files
+              </Typography>
+            </div>
+            <Button
+              variant="contained"
+              onClick={() => setUploadDialogOpen(true)}
+              startIcon={<span>+</span>}
+              sx={{
+                background: "linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)",
+                boxShadow: "0 3px 5px 2px rgba(25, 118, 210, .3)",
               }}
             >
-              &times;
-            </span>
+              Upload Files
+            </Button>
+          </div>
+        </Box>
 
-            <h2 style={{ marginBottom: '1rem', textAlign: 'center' }}>Upload File</h2>
+        <div className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-1">
+            <Card className="sticky top-6">
+              <CardContent className="p-6 space-y-4">
+                <Typography variant="h6" className="font-bold text-gray-800">
+                  Quick Actions
+                </Typography>
+                <Button fullWidth variant="outlined" onClick={() => setUploadDialogOpen(true)}>
+                  Upload New File
+                </Button>
+                <Button fullWidth variant="outlined">Bulk Import</Button>
+                <Button fullWidth variant="contained">View Dashboard</Button>
+                <Divider />
+                <Typography variant="subtitle2">File Statistics</Typography>
+                <div className="space-y-1">
+                  <div className="flex justify-between text-sm">
+                    <span>Total Files</span>
+                    <span>{uploadedFiles.length}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Well Data</span>
+                    <span>{groupedFiles["Well Data"]?.length || 0}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Seismic Data</span>
+                    <span>{groupedFiles["Seismic Data"]?.length || 0}</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <label>Name*</label>
-              <input type="text" defaultValue="File 1" style={{ padding: '0.5rem' }} />
+          <div className="lg:col-span-2 space-y-8">
+            {Object.entries(groupedFiles).map(([category, files]) => (
+              <div key={category}>
+                <div className="flex items-center gap-3 mb-4">
+                  <Avatar sx={{ bgcolor: category === "Well Data" ? "#1976d2" : "#9c27b0" }}>
+                    {category === "Well Data" ? "🛢️" : "🌊"}
+                  </Avatar>
+                  <div>
+                    <Typography variant="h5" className="font-bold">
+                      {category}
+                    </Typography>
+                    <Typography variant="body2" className="text-gray-600">
+                      {files.length} files
+                    </Typography>
+                  </div>
+                </div>
 
-              <label>Slug</label>
-              <input type="text" placeholder="Optional, auto-generated" style={{ padding: '0.5rem' }} />
-
-              <label>Description</label>
-              <textarea rows="3" style={{ padding: '0.5rem' }} />
-
-              <label>Upload File</label>
-              <div className="upload-wrapper" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <input type="file" id="fileInput" />
-                <button
-                  onClick={uploadFile}
-                  style={{
-                    backgroundColor: '#1976d2',
-                    color: '#fff',
-                    border: 'none',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  ⬆ Upload
-                </button>
+                <div className="grid grid-cols-1 gap-4">
+                  {files.map((file) => {
+                    const fileIcon = getFileIcon(file.filename);
+                    return (
+                      <Card key={file.id}>
+                        <CardContent className="p-4 flex justify-between items-start">
+                          <div className="flex gap-4 items-start">
+                            <div className="w-12 h-12 flex items-center justify-center text-2xl rounded-lg" style={{ backgroundColor: `${fileIcon.color}20` }}>
+                              {fileIcon.emoji}
+                            </div>
+                            <div>
+                              <Typography variant="h6" className="font-semibold truncate">
+                                {file.filename}
+                              </Typography>
+                              <Typography variant="body2" className="text-gray-600">
+                                {file.description || "No description"}
+                              </Typography>
+                              <div className="text-sm text-gray-500 mt-1">
+                                {file.size} • {file.uploadDate}
+                              </div>
+                            </div>
+                          </div>
+                          <IconButton onClick={(e) => handleMenuClick(e, file)}>
+                            ⋮
+                          </IconButton>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
               </div>
-
-              <div style={{ color: 'green', fontSize: '0.9rem' }}>{uploadStatus}</div>
-
-              <label>File Type*</label>
-              <select id="fileTypeSelect">
-                <option>Seismic</option>
-                <option>Well Data</option>
-                <option>Financial</option>
-                <option>Others</option>
-              </select>
-
-              <label>Well coordinates*</label>
-              <div style={{ marginTop: '0.5rem' }}>
-                <label>
-                  <input type="radio" name="wellCoords" value="yes" defaultChecked /> Yes
-                </label>
-                <label style={{ marginLeft: '1rem' }}>
-                  <input type="radio" name="wellCoords" value="no" /> No
-                </label>
-              </div>
-
-              <div className="actions" style={{ marginTop: '1.5rem' }}>
-                <button onClick={closeModal}>Cancel</button>
-                <button>Save Changes</button>
-              </div>
-
-              <div className="highlight-box" style={{
-                marginTop: '1.5rem',
-                background: '#f9f9f9',
-                padding: '1rem',
-                border: '1px solid #ddd',
-                borderRadius: '6px',
-                fontSize: '0.9rem',
-              }}>
-                <p>
-                  <strong>Note:</strong> If you have chosen to map to your data
-                  where it resides currently, our ingestion engine will scan the
-                  selected files and identify relevant data.
-                </p>
-                <p>
-                  If you selected <strong>Cloud-based silo storage</strong>,
-                  proceed to the next page to upload data to your proprietary
-                  cloud storage.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
-      )}
-    </div>
+
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
+          <MenuItem onClick={handleMenuClose}>View Details</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Download</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Edit</MenuItem>
+          <Divider />
+          <MenuItem onClick={handleMenuClose} sx={{ color: "error.main" }}>Delete</MenuItem>
+        </Menu>
+
+        <UploadForm open={uploadDialogOpen} onClose={() => setUploadDialogOpen(false)} onUpload={handleUpload} />
+      </div>
+    </ThemeProvider>
   );
 }
