@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 import { Slider, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 
 const getRandomColor = () => Math.floor(Math.random() * 0xffffff);
@@ -93,6 +95,7 @@ const VoxelViewer = () => {
     controls.target.copy(center);
     controls.update();
 
+    // Tooltip setup
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     const tooltip = document.createElement("div");
@@ -121,13 +124,51 @@ const VoxelViewer = () => {
         tooltip.style.display = "none";
       }
     };
-
     window.addEventListener("mousemove", onMouseMove);
+
+    // Axes mini scene with labels
+    const axesScene = new THREE.Scene();
+    const axesCamera = new THREE.PerspectiveCamera(50, 1, 1, 1000);
+    axesCamera.up = camera.up;
+    axesCamera.position.set(0, 0, 10);
+    const axesHelper = new THREE.AxesHelper(5);
+    axesScene.add(axesHelper);
+
+    const fontLoader = new FontLoader();
+    fontLoader.load("https://threejs.org/examples/fonts/helvetiker_regular.typeface.json", (font) => {
+      const createLabel = (text, color, position) => {
+        const geometry = new TextGeometry(text, {
+          font,
+          size: 0.5,
+          height: 0.05,
+        });
+        const material = new THREE.MeshBasicMaterial({ color });
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.copy(position);
+        axesScene.add(mesh);
+      };
+
+      createLabel("X", 0xff0000, new THREE.Vector3(5.5, 0, 0));
+      createLabel("Y", 0x00ff00, new THREE.Vector3(0, 5.5, 0));
+      createLabel("Z", 0x0000ff, new THREE.Vector3(0, 0, 5.5));
+    });
 
     const animate = () => {
       requestAnimationFrame(animate);
       controls.update();
+      renderer.setViewport(0, 0, mountRef.current.clientWidth, mountRef.current.clientHeight);
+      renderer.setScissorTest(false);
       renderer.render(scene, camera);
+
+      // render axes helper in corner
+      const size = 100;
+      renderer.clearDepth();
+      renderer.setScissorTest(true);
+      renderer.setScissor(10, 10, size, size);
+      renderer.setViewport(10, 10, size, size);
+      axesCamera.quaternion.copy(camera.quaternion);
+      renderer.render(axesScene, axesCamera);
+      renderer.setScissorTest(false);
     };
     animate();
 

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import RawDataViewer from "./RawDataViewer";
+import DualViewer from "./DualSurfacePlot";
 import {
   Tabs,
   Tab,
@@ -84,7 +85,7 @@ export default function VoxelTabViewer() {
 
           {/* Tab Content */}
           <TabPanel value={tabValue} index={0}>
-            <Paper elevation={1} className="bg-gray-50 rounded-lg overflow-hidden" sx={{ height: 400 }}>
+            <Paper elevation={1} className="bg-gray-50 rounded-lg overflow-auto" sx={{ height: 400 }}>
                 <RawDataViewer />
               </Paper>
 
@@ -99,7 +100,7 @@ export default function VoxelTabViewer() {
           </TabPanel>
 
           <TabPanel value={tabValue} index={1}>
-            <Paper elevation={1} className="bg-gray-50 rounded-lg overflow-hidden" sx={{ height: 400 }}>
+            <Paper elevation={1} className="bg-gray-50 rounded-lg overflow-auto" sx={{ height: 400 }}>
                 <RawDataViewer />
               </Paper>
             <Box className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg max-w-4xl mx-auto">
@@ -112,7 +113,16 @@ export default function VoxelTabViewer() {
           </TabPanel>
 
           <TabPanel value={tabValue} index={2}>
-            <EmptyState title="Production View" subtitle="Production data and forecasting shown here." />
+             <Paper elevation={1} className="bg-gray-50 rounded-lg overflow-auto" sx={{ height: 400 }}>
+                <DualViewer />
+              </Paper>
+              <Box className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg max-w-4xl mx-auto">
+                <Typography variant="body1" className="text-gray-700">
+                  <span className="font-semibold text-blue-700">Answer:</span>{" "}
+                  Displays the original dataset including spatial, geological, and production attributes from wells.
+                  Useful for exploring raw inputs.
+                </Typography>
+              </Box>
           </TabPanel>
         </Paper>
       </Container>

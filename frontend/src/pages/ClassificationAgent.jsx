@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import summaryImage from '../../public/S1.png'; // main scatter image
 import well1Log from '../../public/S1.png';  // 858d3b...png (log image for Well-1)
 import well2Log from '../../public/S2.png';     // log image for Well-2
 
@@ -19,9 +18,7 @@ export default function ClassificationAgent() {
 
   return (
     <div style={{ padding: '2rem' }}>
-      <h2 style={{ textAlign: 'center' }}>Cluster Analysis</h2>
-
-      <div style={{ display: 'flex', gap: '2rem', marginTop: '2rem', alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', gap: '2rem', marginTop: '2rem', alignItems: 'flex-start' }}>
         {/* Main Classification Scatter Image */}
         <div style={{ flex: 1 }}>
           <img

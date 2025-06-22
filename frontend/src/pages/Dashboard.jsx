@@ -10,9 +10,7 @@ import {
   Typography,
   Grid,
   Paper,
-  Chip,
-  Divider,
-  Box
+  Box,
 } from "@mui/material";
 import {
   PlayArrow,
@@ -23,9 +21,6 @@ import {
   Visibility,
   Chat,
   TrendingUp,
-  Storage,
-  Computer,
-  Description,
 } from "@mui/icons-material";
 
 function formatTimestamped(message) {
@@ -136,14 +131,38 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto" style={{ position: "relative" }}>
         <Typography variant="h4" className="text-blue-800 font-bold mb-4">
           Well Data Analysis Dashboard
         </Typography>
 
+        {/* Floating Chat Box */}
+        {showChat && (
+          <Box
+            sx={{
+              position: "absolute",
+              top: 20,
+              right: 20,
+              width: 360,
+              zIndex: 1000,
+            }}
+          >
+            <Card elevation={6}>
+              {/* <CardHeader title="AI Chat Assistant" /> */}
+              <CardContent>
+                <ConvexChat />
+              </CardContent>
+            </Card>
+          </Box>
+        )}
+
         <Card className="mb-6 shadow-lg">
           <CardHeader
-            title={<div className="flex items-center gap-2 text-blue-800"><BarChart /> Build Logs & Processing</div>}
+            title={
+              <div className="flex items-center gap-2 text-blue-800">
+                <BarChart /> Build Logs & Processing
+              </div>
+            }
           />
           <CardContent>
             <Box display="flex" gap={2} mb={2}>
@@ -166,167 +185,176 @@ export default function Dashboard() {
 
             {pipelineLogs.length > 0 && (
               <Box bgcolor="#f9f9f9" p={2} borderRadius={2} border="1px solid #ddd" mb={2}>
-                <Typography variant="subtitle1" fontWeight={600} gutterBottom>Pipeline Status</Typography>
+                <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                  Pipeline Status
+                </Typography>
                 {pipelineLogs.map((log, idx) => (
-                  <Typography key={idx} variant="body2">{log}</Typography>
+                  <Typography key={idx} variant="body2">
+                    {log}
+                  </Typography>
                 ))}
               </Box>
             )}
 
             {processingResult && (
               <Box bgcolor="#f0fdf4" p={2} borderRadius={2} border="1px solid #c6f6d5">
-                <Typography variant="subtitle1" fontWeight={600} gutterBottom>Processing Result</Typography>
+                <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                  Processing Result
+                </Typography>
                 {Object.entries(processingResult).map(([key, value]) => (
-                  <Typography key={key} variant="body2"><strong>{key}:</strong> {Array.isArray(value) ? value.join(", ") : value}</Typography>
+                  <Typography key={key} variant="body2">
+                    <strong>{key}:</strong> {Array.isArray(value) ? value.join(", ") : value}
+                  </Typography>
                 ))}
               </Box>
             )}
           </CardContent>
         </Card>
 
+        {/* Four Feature Cards */}
         <Card className="mb-6 shadow-sm">
-  <CardContent>
-    <Grid container spacing={3}>
-      <Grid item xs={12} md={6}>
-        <Paper
-          onClick={handleShowMap}
-          elevation={0}
-          sx={{
-            p: 3,
-            borderRadius: 2,
-            border: '1px solid #000',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            cursor: 'pointer',
-            minHeight: 120,
-            backgroundColor: '#fff',
-          }}
-        >
-          <Map sx={{ fontSize: 40, color: '#000' }} />
-          <Box>
-            <Typography variant="h6" sx={{ fontWeight: 600, color: '#000' }}>
-              Pattern Recognition
-            </Typography>
-            <Typography variant="body2" sx={{ color: '#333' }}>
-              Detects spatial and temporal similarities across wells.
-            </Typography>
-          </Box>
-        </Paper>
-      </Grid>
+          <CardContent>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}>
+                <Paper
+                  onClick={handleShowMap}
+                  elevation={0}
+                  sx={{
+                    p: 3,
+                    borderRadius: 2,
+                    border: "1px solid #000",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    cursor: "pointer",
+                    minHeight: 120,
+                    backgroundColor: "#fff",
+                  }}
+                >
+                  <Map sx={{ fontSize: 40, color: "#000" }} />
+                  <Box>
+                    <Typography variant="h6" sx={{ fontWeight: 600, color: "#000" }}>
+                      Pattern Recognition
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: "#333" }}>
+                      Detects spatial and temporal similarities across wells.
+                    </Typography>
+                  </Box>
+                </Paper>
+              </Grid>
 
-      <Grid item xs={12} md={6}>
-        <Paper
-          onClick={() => window.open("/digital-twin", "_blank")}
-          elevation={0}
-          sx={{
-            p: 3,
-            borderRadius: 2,
-            border: '1px solid #000',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            cursor: 'pointer',
-            minHeight: 120,
-            backgroundColor: '#fff',
-          }}
-        >
-          <TrendingUp sx={{ fontSize: 40, color: '#000' }} />
-          <Box>
-            <Typography variant="h6" sx={{ fontWeight: 600, color: '#000' }}>
-              Sensitivity Report
-            </Typography>
-            <Typography variant="body2" sx={{ color: '#333' }}>
-              Visualize simulated output from digital twin models.
-            </Typography>
-          </Box>
-        </Paper>
-      </Grid>
+              <Grid item xs={12} md={6}>
+                <Paper
+                  onClick={() => window.open("/digital-twin", "_blank")}
+                  elevation={0}
+                  sx={{
+                    p: 3,
+                    borderRadius: 2,
+                    border: "1px solid #000",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    cursor: "pointer",
+                    minHeight: 120,
+                    backgroundColor: "#fff",
+                  }}
+                >
+                  <TrendingUp sx={{ fontSize: 40, color: "#000" }} />
+                  <Box>
+                    <Typography variant="h6" sx={{ fontWeight: 600, color: "#000" }}>
+                      Sensitivity Report
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: "#333" }}>
+                      Visualize simulated output from digital twin models.
+                    </Typography>
+                  </Box>
+                </Paper>
+              </Grid>
 
-      <Grid item xs={12} md={6}>
-        <Paper
-          onClick={() => window.open("/voxel", "_blank")}
-          elevation={0}
-          sx={{
-            p: 3,
-            borderRadius: 2,
-            border: '1px solid #000',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            cursor: 'pointer',
-            minHeight: 120,
-            backgroundColor: '#fff',
-          }}
-        >
-          <FlashOn sx={{ fontSize: 40, color: '#000' }} />
-          <Box>
-            <Typography variant="h6" sx={{ fontWeight: 600, color: '#000' }}>
-              Well Planning Insights
-            </Typography>
-            <Typography variant="body2" sx={{ color: '#333' }}>
-              Guides drilling with formation and production analysis.
-            </Typography>
-          </Box>
-        </Paper>
-      </Grid>
+              <Grid item xs={12} md={6}>
+                <Paper
+                  onClick={() => window.open("/voxel", "_blank")}
+                  elevation={0}
+                  sx={{
+                    p: 3,
+                    borderRadius: 2,
+                    border: "1px solid #000",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    cursor: "pointer",
+                    minHeight: 120,
+                    backgroundColor: "#fff",
+                  }}
+                >
+                  <FlashOn sx={{ fontSize: 40, color: "#000" }} />
+                  <Box>
+                    <Typography variant="h6" sx={{ fontWeight: 600, color: "#000" }}>
+                      Well Planning Insights
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: "#333" }}>
+                      Guides drilling with formation and production analysis.
+                    </Typography>
+                  </Box>
+                </Paper>
+              </Grid>
 
-      <Grid item xs={12} md={6}>
-        <Paper
-          onClick={handleAskImage}
-          elevation={0}
-          sx={{
-            p: 3,
-            borderRadius: 2,
-            border: '1px solid #000',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            cursor: 'pointer',
-            minHeight: 120,
-            backgroundColor: '#fff',
-          }}
-        >
-          <Visibility sx={{ fontSize: 40, color: '#000' }} />
-          <Box>
-            <Typography variant="h6" sx={{ fontWeight: 600, color: '#000' }}>
-              Vug Analysis
-            </Typography>
-            <Typography variant="body2" sx={{ color: '#333' }}>
-              Interpret porous zones using AI-enhanced visual inference.
-            </Typography>
-          </Box>
-        </Paper>
-      </Grid>
-    </Grid>
-  </CardContent>
-</Card>
-        <div className="fixed bottom-6 left-6">
+              <Grid item xs={12} md={6}>
+                <Paper
+                  onClick={handleAskImage}
+                  elevation={0}
+                  sx={{
+                    p: 3,
+                    borderRadius: 2,
+                    border: "1px solid #000",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    cursor: "pointer",
+                    minHeight: 120,
+                    backgroundColor: "#fff",
+                  }}
+                >
+                  <Visibility sx={{ fontSize: 40, color: "#000" }} />
+                  <Box>
+                    <Typography variant="h6" sx={{ fontWeight: 600, color: "#000" }}>
+                      Vug Analysis
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: "#333" }}>
+                      Interpret porous zones using AI-enhanced inference.
+                    </Typography>
+                  </Box>
+                </Paper>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+
+        {/* Chat Toggle Button */}
+        <Box display="flex" justifyContent="flex-end" mb={2}>
           <Button
             variant="contained"
             startIcon={<Chat />}
             onClick={() => setShowChat(!showChat)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-lg"
+            sx={{
+              backgroundColor: "#1976d2",
+              "&:hover": { backgroundColor: "#115293" },
+              color: "#fff",
+            }}
           >
-            Chat Now!
+            {showChat ? "Hide Chat" : "Chat Now!"}
           </Button>
-        </div>
-
-        {showChat && (
-          <div className="fixed bottom-24 left-6 z-40">
-            <ConvexChat />
-          </div>
-        )}
-
-        {showTrainingModal && (
-          <ModelTrainingModal
-            onClose={() => setShowTrainingModal(false)}
-            onSelect={handleModelSelect}
-            clusters={clusters}
-            setClusters={setClusters}
-          />
-        )}
+        </Box>
       </div>
+
+      {showTrainingModal && (
+        <ModelTrainingModal
+          onClose={() => setShowTrainingModal(false)}
+          onSelect={handleModelSelect}
+          clusters={clusters}
+          setClusters={setClusters}
+        />
+      )}
     </div>
   );
 }

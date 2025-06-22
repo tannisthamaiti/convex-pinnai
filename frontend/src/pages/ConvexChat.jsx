@@ -43,103 +43,94 @@ export default function ConvexChat() {
 
   if (!visible) return null;
 
-  return (
-    <div style={{
-      position: 'fixed',
-      bottom: '2rem',
-      right: '2rem',
-      width: '350px',
-      maxHeight: '500px',
-      border: '1px solid #ccc',
-      borderRadius: '10px',
-      backgroundColor: '#fff',
+return (
+  <div
+    style={{
+      width: '100%',
+      height: 'auto',
+      border: 'none',
+      borderRadius: 0,
+      backgroundColor: 'transparent',
       display: 'flex',
       flexDirection: 'column',
       fontFamily: 'Segoe UI, sans-serif',
-      boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
-      zIndex: 1000
-    }}>
-      <div style={{
-        padding: '0.75rem',
-        borderBottom: '1px solid #eee',
-        fontWeight: 'bold',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
-        <span>Ask me about optimal well placement and reservoir data!</span>
-        <button
-          onClick={() => setVisible(false)}
-          style={{
-            border: 'none',
-            background: 'none',
-            fontSize: '1rem',
-            cursor: 'pointer',
-            color: '#999',
-            fontWeight: 'bold'
-          }}
-          title="Close chat"
-        >
-          ❌
-        </button>
-      </div>
-
+      boxShadow: 'none',
+    }}
+  >
       <div
-        ref={chatBoxRef}
+    style={{
+      padding: '0.5rem 0',
+      fontWeight: 600,
+      fontSize: '1rem',
+      color: '#444',
+      marginBottom: '0.5rem',
+    }}
+>
+      Ask me about optimal well placement and reservoir data!
+    </div>
+
+    <div
+      ref={chatBoxRef}
+      style={{
+        padding: '1rem',
+        overflowY: 'auto',
+        maxHeight: 300,
+        fontSize: '0.9rem',
+        background: '#f9f9f9',
+        border: '1px solid #eee',
+        borderRadius: '6px',
+        marginBottom: '1rem',
+      }}
+    >
+      {messages.map((msg) => (
+        <div
+          key={msg._id}
+          style={{
+            backgroundColor: msg.user === NAME ? "#e6f4ff" : "#f0f0f0",
+            padding: "0.6rem",
+            marginBottom: "0.5rem",
+            borderRadius: "6px",
+            whiteSpace: "pre-wrap"
+          }}
+        >
+          <strong>{msg.user === NAME ? "You" : "Bot"}:</strong>{" "}
+          <span style={{ color: msg.user === NAME ? "#333" : "#007b83" }}>{msg.body}</span>
+        </div>
+      ))}
+    </div>
+
+    <form onSubmit={handleSubmit} style={{ display: "flex" }}>
+      <input
+        value={newMessageText}
+        onChange={(e) => setNewMessageText(e.target.value)}
+        placeholder="Ask a question..."
         style={{
-          padding: '1rem',
-          overflowY: 'auto',
-          flexGrow: 1,
-          fontSize: '0.9rem',
+          flex: 1,
+          border: "1px solid #ccc",
+          padding: "0.75rem",
+          fontSize: "0.9rem",
+          borderRadius: "6px 0 0 6px",
+          outline: "none",
+        }}
+      />
+      <button
+        type="submit"
+        disabled={!newMessageText}
+        style={{
+          backgroundColor: "#007bff",
+          color: "#fff",
+          border: "none",
+          padding: "0 1rem",
+          cursor: "pointer",
+          fontWeight: "bold",
+          borderRadius: "0 6px 6px 0",
         }}
       >
-        {messages.map((msg) => (
-          <div
-            key={msg._id}
-            style={{
-              backgroundColor: msg.user === NAME ? "#e6f4ff" : "#f0f0f0",
-              padding: "0.6rem",
-              marginBottom: "0.5rem",
-              borderRadius: "6px",
-              whiteSpace: "pre-wrap"
-            }}
-          >
-            <strong>{msg.user === NAME ? "You" : "Bot"}:</strong>{" "}
-            <span style={{ color: msg.user === NAME ? "#333" : "#007b83" }}>{msg.body}</span>
-          </div>
-        ))}
-      </div>
-
-      <form onSubmit={handleSubmit} style={{ display: "flex", borderTop: "1px solid #eee" }}>
-        <input
-          value={newMessageText}
-          onChange={(e) => setNewMessageText(e.target.value)}
-          placeholder="Ask a question..."
-          style={{
-            flex: 1,
-            border: "none",
-            padding: "0.75rem",
-            fontSize: "0.9rem",
-            outline: "none"
-          }}
-        />
-        <button
-          type="submit"
-          disabled={!newMessageText}
-          style={{
-            backgroundColor: "#007bff",
-            color: "#fff",
-            border: "none",
-            padding: "0 1rem",
-            cursor: "pointer",
-            fontWeight: "bold"
-          }}
-        >
-          Send
-        </button>
-      </form>
-    </div>
-  );
+        Send
+      </button>
+    </form>
+  </div>
+);
 }
 
 function getOrSetFakeName() {
