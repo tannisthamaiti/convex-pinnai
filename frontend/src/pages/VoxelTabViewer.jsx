@@ -78,8 +78,8 @@ export default function VoxelTabViewer() {
               }}
             >
               <Tab label="RAW DATA" />
-              <Tab label="SUPERVISED ANALYSIS" />
-              <Tab label="PRODUCTION" />
+              <Tab label="ANALYSED DATA" />
+              <Tab label="WELL PLANNING" />
             </Tabs>
           </Box>
 

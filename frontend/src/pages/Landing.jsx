@@ -24,14 +24,14 @@ export default function Landing() {
       }}>
         <img 
           src="/Logo.png"
-          alt="Earthscan Logo" 
+          alt="Pinnai Logo" 
           style={{ 
             width: '200px',
             height: 'auto'
           }} 
         />
         
-        <h1 style={{ margin: 0 }}>Earthscan platform</h1>
+        {/* <h1 style={{ margin: 0 }}>Earthscan platform</h1> */}
         
         <p style={{
           fontSize: '1.5rem',

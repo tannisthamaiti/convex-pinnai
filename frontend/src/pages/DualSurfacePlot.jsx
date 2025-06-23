@@ -101,9 +101,9 @@ const SurfacePanel = ({ dataUrl }) => {
         gridYZ.position.set(-0.5, 0, 0);
         scene.add(gridYZ);
         scene.add(new THREE.AxesHelper(1));
-        scene.add(createLabel('X', new THREE.Vector3(1.1, 0, 0)));
-        scene.add(createLabel('Y', new THREE.Vector3(0, 1.1, 0)));
-        scene.add(createLabel('Z', new THREE.Vector3(0, 0, 1.1)));
+        scene.add(createLabel('Lat', new THREE.Vector3(1.1, 0, 0)));
+        scene.add(createLabel('Long', new THREE.Vector3(0, 1.1, 0)));
+        scene.add(createLabel('Dept', new THREE.Vector3(0, 0, 1.1)));
         const controls = new OrbitControls(camera, renderer.domElement);
         const animate = () => {
           requestAnimationFrame(animate);
@@ -126,24 +126,52 @@ const InputSidebar = ({ onSubmit }) => {
   const [lat, setLat] = useState('');
   const [lon, setLon] = useState('');
 
+// ✅ Define the function here
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(lat, lon); // Ensure the parent passes a valid function
+  };
+
   return (
-    <div style={{
-      width: '250px',
-      padding: '20px',
-      backgroundColor: '#f4f4f4',
-      borderLeft: '1px solid #ccc',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '10px'
-    }}>
-      <h3>Well Planing </h3>
-      <label>Enter Starting Latitude:
-        <input type="number" value={lat} onChange={e => setLat(e.target.value)} />
-      </label>
-      <label>Enter Starting Longitude:
-        <input type="number" value={lon} onChange={e => setLon(e.target.value)} />
-      </label>
-      <button onClick={() => onSubmit(lat, lon)}>Submit</button>
+    <div className="w-[300px] p-6 bg-white border-l border-gray-200 shadow-md">
+      <h4 className="text-2xl font-bold text-slate-700 mb-6">Enter coordinates to optimize well placement</h4>
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-2">
+          <label htmlFor="latitude" className="text-sm font-medium text-gray-700">
+            Enter Starting Latitude:
+          </label>
+          <input
+            id="latitude"
+            type="number"
+            value={lat}
+            onChange={(e) => setLat(e.target.value)}
+            placeholder="29.7604"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label htmlFor="longitude" className="text-sm font-medium text-gray-700">
+            Enter Starting Longitude:
+          </label>
+          <input
+            id="longitude"
+            type="number"
+            value={lon}
+            onChange={(e) => setLon(e.target.value)}
+            placeholder="-95.3698"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow"
+        >
+          Submit
+        </button>
+      </form>
     </div>
   );
 };
