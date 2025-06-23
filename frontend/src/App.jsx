@@ -1,6 +1,3 @@
-// DESTINATION: vite-project/src/App.jsx
-// REPLACE YOUR EXISTING App.jsx WITH THIS
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Landing from './pages/Landing';
 import Register from './pages/Register';
