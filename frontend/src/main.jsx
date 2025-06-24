@@ -1,23 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { ConvexProviderWithAuth0 } from "convex/react-auth0";
+import React, { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { ClerkProvider, useAuth } from "@clerk/clerk-react";
+import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { ConvexReactClient } from "convex/react";
-import App from './App';
-import './index.css';
+import "./index.css";
+import App from "./App";
+import { ErrorBoundary } from "./ErrorBoundary";
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <ConvexProviderWithAuth0
-      client={convex}
-      authInfo={{
-        domain: import.meta.env.VITE_AUTH0_DOMAIN,
-        clientId: import.meta.env.VITE_AUTH0_CLIENT_ID,
-        redirectUri: window.location.origin,
-      }}
-    >
-      <App />
-    </ConvexProviderWithAuth0>
-  </React.StrictMode>
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <ErrorBoundary>
+      <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
+        <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+          <App />
+        </ConvexProviderWithClerk>
+      </ClerkProvider>
+    </ErrorBoundary>
+  </StrictMode>
 );

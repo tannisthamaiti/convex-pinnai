@@ -1,61 +1,50 @@
+"use client";
 import { useNavigate } from 'react-router-dom';
+import {
+  Authenticated,
+  Unauthenticated,
+} from "convex/react";
+import { SignInButton, SignUpButton, UserButton } from "@clerk/clerk-react";
 
 export default function Landing() {
   const navigate = useNavigate();
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      minHeight: 'calc(100vh - 120px)', // Account for navbar and footer
-    }}>
-      <div style={{
-        backgroundColor: 'white',
-        padding: '3rem',
-        borderRadius: '12px',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-        width: '100%',
-        maxWidth: '600px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '2rem'
-      }}>
-        <img 
-          src="/Logo.png"
-          alt="Pinnai Logo" 
-          style={{ 
-            width: '200px',
-            height: 'auto'
-          }} 
-        />
-        
-        {/* <h1 style={{ margin: 0 }}>Earthscan platform</h1> */}
-        
-        <p style={{
-          fontSize: '1.5rem',
-          margin: 0
-        }}>
-          Math that drills
-        </p>
-        
-        <button
-          onClick={() => navigate('/register')}
-          style={{
-            fontSize: '1.2rem',
-            padding: '1rem 2.5rem',
-            backgroundColor: 'var(--secondary-color)',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            transition: 'background-color 0.3s ease'
-          }}
-        >
-          Register
-        </button>
-      </div>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+      <header className="w-full flex justify-between items-center p-4 border-b bg-white shadow">
+        <img src="/Logo.png" alt="Pinnai Logo" className="w-32" />
+        <UserButton />
+      </header>
+
+      <main className="flex flex-col items-center justify-center flex-1 px-4 py-16">
+        <h1 className="text-4xl font-bold mb-6 text-center">Math that drills</h1>
+
+        <Authenticated>
+          <p className="text-lg mb-4">Welcome! You're signed in.</p>
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="bg-blue-600 text-white px-6 py-3 rounded-md text-lg hover:bg-blue-700"
+          >
+            Go to Dashboard
+          </button>
+        </Authenticated>
+
+        <Unauthenticated>
+          <div className="flex flex-col gap-4 w-80">
+            <p className="text-center">Sign in or register to continue</p>
+            <SignInButton mode="modal">
+              <button className="bg-dark dark:bg-light text-light dark:text-dark text-sm px-4 py-2 rounded-md border-2">
+                Sign In
+              </button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <button className="bg-dark dark:bg-light text-light dark:text-dark text-sm px-4 py-2 rounded-md border-2">
+                Sign Up
+              </button>
+            </SignUpButton>
+          </div>
+        </Unauthenticated>
+      </main>
     </div>
   );
 }
