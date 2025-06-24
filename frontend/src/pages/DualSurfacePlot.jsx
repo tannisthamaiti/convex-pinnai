@@ -2,6 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import Delaunator from 'delaunator';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography
+} from '@mui/material';
 
 const interpolateSpline = (data, numPoints = 200) => {
   const curvePoints = data.map(p => new THREE.Vector3(p.x, p.y, p.z));
@@ -119,80 +129,119 @@ const SurfacePanel = ({ dataUrl }) => {
     };
   }, [dataUrl]);
 
-  return <div ref={mountRef} style={{ width: '100%', height: '100%' }} />;
-};
-
-const InputSidebar = ({ onSubmit }) => {
-  const [lat, setLat] = useState('');
-  const [lon, setLon] = useState('');
-
-// ✅ Define the function here
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(lat, lon); // Ensure the parent passes a valid function
-  };
-
-  return (
-    <div className="w-[300px] p-6 bg-white border-l border-gray-200 shadow-md">
-      <h4 className="text-2xl font-bold text-slate-700 mb-6">Enter coordinates to optimize well placement</h4>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="space-y-2">
-          <label htmlFor="latitude" className="text-sm font-medium text-gray-700">
-            Enter Starting Latitude:
-          </label>
-          <input
-            id="latitude"
-            type="number"
-            value={lat}
-            onChange={(e) => setLat(e.target.value)}
-            placeholder="29.7604"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label htmlFor="longitude" className="text-sm font-medium text-gray-700">
-            Enter Starting Longitude:
-          </label>
-          <input
-            id="longitude"
-            type="number"
-            value={lon}
-            onChange={(e) => setLon(e.target.value)}
-            placeholder="-95.3698"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow"
-        >
-          Submit
-        </button>
-      </form>
-    </div>
-  );
+  return <div ref={mountRef} className="w-full h-full" />;
 };
 
 const DualSurfacePlot = () => {
-  const handleSubmit = (lat, lon) => {
-    console.log("Latitude:", lat, "Longitude:", lon);
-    // TODO: trigger a search or marker on the 3D plot
+  const [resultPath, setResultPath] = useState([]);
+
+  const handleSubmit = async (lat, lon) => {
+    try {
+      const response = await fetch('https://etscan.org/dijkstrainput', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ lat: parseFloat(lat), lon: parseFloat(lon) }),
+      });
+      if (!response.ok) throw new Error(`API error: ${response.status}`);
+      const data = await response.json();
+      console.log("API Response:", data);
+      setResultPath(data.path || []);
+    } catch (err) {
+      console.error("Fetch error:", err);
+    }
+  };
+
+  const InputSidebar = ({ onSubmit }) => {
+    const [lat, setLat] = useState('');
+    const [lon, setLon] = useState('');
+
+    const handleFormSubmit = (e) => {
+      e.preventDefault();
+      onSubmit(lat, lon);
+    };
+
+    return (
+      <div className="w-[300px] p-6 bg-white border-l border-gray-200 shadow-md">
+        <h4 className="text-2xl font-bold text-slate-700 mb-6">Enter coordinates to optimize well placement</h4>
+        <form onSubmit={handleFormSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <label htmlFor="latitude" className="text-sm font-medium text-gray-700">Latitude</label>
+            <input
+              id="latitude"
+              type="number"
+              value={lat}
+              onChange={(e) => setLat(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm"
+              placeholder="29.7604"
+            />
+          </div>
+          <div className="space-y-2">
+            <label htmlFor="longitude" className="text-sm font-medium text-gray-700">Longitude</label>
+            <input
+              id="longitude"
+              type="number"
+              value={lon}
+              onChange={(e) => setLon(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm"
+              placeholder="-95.3698"
+            />
+          </div>
+          <button type="submit" className="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow">
+            Submit
+          </button>
+        </form>
+      </div>
+    );
   };
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <div style={{ flex: 1, borderBottom: '2px solid #aaa' }}>
-          <SurfacePanel dataUrl="/cumoil_surface.json" />
+    <div className="flex flex-col h-full">
+      <div className="flex h-[75vh]">
+        <div className="flex-1 flex flex-col">
+          <div className="flex-1 border-b-2 border-gray-300">
+            <SurfacePanel dataUrl="/cumoil_surface.json" />
+          </div>
+          <div className="flex-1">
+            <SurfacePanel dataUrl="/max_cumoil_path.json" />
+          </div>
         </div>
-        <div style={{ flex: 1 }}>
-          <SurfacePanel dataUrl="/max_cumoil_path.json" />
+        <InputSidebar onSubmit={handleSubmit} />
+      </div>
+
+      <div className="w-full px-4 pb-4">
+        <Typography variant="h6" className="font-bold text-blue-700 mb-2">
+          <h4>Optimized Path Result</h4>
+        </Typography>
+        <div className="max-h-[300px] overflow-auto border border-gray-300 rounded-md shadow-sm">
+          <TableContainer component={Paper} className="min-w-full">
+            <Table stickyHeader size="small">
+              <TableHead>
+                <TableRow className="bg-gray-100">
+                  <TableCell>#</TableCell>
+                  <TableCell>Latitude (x)</TableCell>
+                  <TableCell>Longitude (y)</TableCell>
+                  <TableCell>Depth (z)</TableCell>
+                  <TableCell>Cumoil</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {resultPath.map((point, index) => {
+                  console.log(`Row ${index + 1}:`, point);
+                  return (
+                    <TableRow key={index}>
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{point.x?.toFixed(2) ?? 'N/A'}</TableCell>
+                      <TableCell>{point.y?.toFixed(2) ?? 'N/A'}</TableCell>
+                      <TableCell>{point.z?.toFixed(2) ?? 'N/A'}</TableCell>
+                      <TableCell>{point.cumoil?.toFixed(2) ?? 'N/A'}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </div>
       </div>
-      <InputSidebar onSubmit={handleSubmit} />
     </div>
   );
 };

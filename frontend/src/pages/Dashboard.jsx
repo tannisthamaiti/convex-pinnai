@@ -279,7 +279,7 @@ export default function Dashboard() {
                       Sensitivity Report
                     </Typography>
                     <Typography variant="body2" sx={{ color: "#333" }}>
-                      Visualize simulated output from digital twin models.
+                      Reservoir productivity parameters analysis report.
                     </Typography>
                   </Box>
                 </Paper>
