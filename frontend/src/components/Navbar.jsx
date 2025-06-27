@@ -1,4 +1,9 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import {
+  Authenticated,
+  Unauthenticated,
+} from "convex/react";
+import { SignInButton, SignUpButton, UserButton,SignedIn, SignedOut } from "@clerk/clerk-react";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -38,6 +43,14 @@ export default function Navbar() {
         >
           ROI Calculator
         </button>
+      </div>
+      {/* ---------- Auth Controls ---------- */}
+        <div className="navbar-auth flex items-center gap-2">
+        {/* Avatar dropdown when signed-in */}
+        <SignedIn>
+          <UserButton afterSignOutUrl="/" />
+        </SignedIn>
+
       </div>
     </nav>
   );

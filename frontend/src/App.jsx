@@ -23,6 +23,7 @@ import CloudSiloSetup from './pages/CloudSiloSetup';
 import WorkflowStepper from './components/WorkflowStepper';
 import ROIModal from './pages/ROIModal';
 import ConvexChat from './pages/ConvexChat';
+import TexasMap from './pages/TexasMap';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/texasmap" element={<TexasMap />} />
             <Route path="/tiers" element={<TierSelection />} />
             <Route path="/storage" element={<StorageSelection />} />
             <Route path="/upload" element={<DataUpload />} />

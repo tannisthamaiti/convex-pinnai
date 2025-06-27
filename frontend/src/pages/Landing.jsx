@@ -4,30 +4,26 @@ import {
   Authenticated,
   Unauthenticated,
 } from "convex/react";
-import { SignInButton, SignUpButton, UserButton } from "@clerk/clerk-react";
+import { SignInButton, SignUpButton, UserButton, SignedIn, SignedOut } from "@clerk/clerk-react";
+
 
 export default function Landing() {
   const navigate = useNavigate();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <header className="w-full flex justify-between items-center p-4 border-b bg-white shadow">
-        <img src="/Logo.png" alt="Pinnai Logo" className="w-32" />
-        <UserButton />
-      </header>
-
       <main className="flex flex-col items-center justify-center flex-1 px-4 py-16">
         <h1 className="text-4xl font-bold mb-6 text-center">Math that drills</h1>
 
-        <Authenticated>
+        <SignedIn>
           <p className="text-lg mb-4">Welcome! You're signed in.</p>
           <button
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("/register")}
             className="bg-blue-600 text-white px-6 py-3 rounded-md text-lg hover:bg-blue-700"
           >
-            Go to Dashboard
+            Please fill more information ...
           </button>
-        </Authenticated>
+        </SignedIn>
 
         <Unauthenticated>
           <div className="flex flex-col gap-4 w-80">

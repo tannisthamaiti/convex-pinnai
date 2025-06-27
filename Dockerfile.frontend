@@ -13,6 +13,8 @@ RUN npm install
 # Copy rest of the app
 COPY frontend/ .
 
+RUN rm -rf node_modules dist && npm ci
+
 RUN npm run build
 
 RUN npm install -g serve

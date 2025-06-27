@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   Typography,
   Button,
@@ -219,7 +220,22 @@ export default function DataSelection() {
                   Upload New File
                 </Button>
                 <Button fullWidth variant="outlined">Bulk Import</Button>
-                <Button fullWidth variant="contained">View Dashboard</Button>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  component={Link}
+                  to="/dashboard"
+                >
+                  View Dashboard
+                </Button>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  component={Link}
+                  to="/texasmap"
+                >
+                  Add more Data
+                </Button>
                 <Divider />
                 <Typography variant="subtitle2">File Statistics</Typography>
                 <div className="space-y-1">
