@@ -92,8 +92,7 @@ export default function VoxelTabViewer() {
               <Box className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg max-w-4xl mx-auto">
                 <Typography variant="body1" className="text-gray-700">
                   <span className="font-semibold text-blue-700">Answer:</span>{" "}
-                  Displays the original dataset including spatial, geological, and production attributes from wells.
-                  Useful for exploring raw inputs.
+                  Displays the original well locations
                 </Typography>
               </Box>
             
@@ -106,8 +105,7 @@ export default function VoxelTabViewer() {
             <Box className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg max-w-4xl mx-auto">
                 <Typography variant="body1" className="text-gray-700">
                   <span className="font-semibold text-blue-700">Answer:</span>{" "}
-                  Displays the original dataset including spatial, geological, and production attributes from wells.
-                  Useful for exploring raw inputs.
+                  Displays clustering analysis of essentially the similiarity of wells.
                 </Typography>
               </Box>
           </TabPanel>

@@ -218,10 +218,10 @@ const DualSurfacePlot = () => {
               <TableHead>
                 <TableRow className="bg-gray-100">
                   <TableCell>#</TableCell>
-                  <TableCell>Latitude (x)</TableCell>
-                  <TableCell>Longitude (y)</TableCell>
-                  <TableCell>Depth (z)</TableCell>
-                  <TableCell>Cumoil</TableCell>
+                  <TableCell>Latitude (&deg;)</TableCell>
+                  <TableCell>Longitude (&deg;)</TableCell>
+                  <TableCell>Depth (m)</TableCell>
+                  <TableCell>Cumoil (m&sup3;)</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -230,10 +230,10 @@ const DualSurfacePlot = () => {
                   return (
                     <TableRow key={index}>
                       <TableCell>{index + 1}</TableCell>
-                      <TableCell>{point.x?.toFixed(2) ?? 'N/A'}</TableCell>
-                      <TableCell>{point.y?.toFixed(2) ?? 'N/A'}</TableCell>
-                      <TableCell>{point.z?.toFixed(2) ?? 'N/A'}</TableCell>
-                      <TableCell>{point.cumoil?.toFixed(2) ?? 'N/A'}</TableCell>
+                      <TableCell>{point.lat?.toFixed(3) ?? 'N/A'}</TableCell>
+                      <TableCell>{point.lon?.toFixed(3) ?? 'N/A'}</TableCell>
+                      <TableCell>{point.dept?.toFixed(3) ?? 'N/A'}</TableCell>
+                      <TableCell>{point.cumoil?.toFixed(3) ?? 'N/A'}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -243,7 +243,7 @@ const DualSurfacePlot = () => {
         </div>
       </div>
     </div>
-  );
+  ); 
 };
 
 export default DualSurfacePlot;

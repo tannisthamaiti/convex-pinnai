@@ -8072,7 +8072,7 @@ export default function Navbar() {
       <div className="navbar-logo" onClick={() => navigate('/')}>
         <img 
           src="/Logo.png" 
-          alt="Earthscan Logo" 
+          alt="PinnAI Logo" 
           style={{ height: '40px', cursor: 'pointer' }}
         />
       </div>
@@ -8474,14 +8474,14 @@ export default function Landing() {
       }}>
         <img 
           src="/Logo.png"
-          alt="Earthscan Logo" 
+          alt="Pinn AI Logo" 
           style={{ 
             width: '200px',
             height: 'auto'
           }} 
         />
         
-        <h1 style={{ margin: 0 }}>Earthscan platform</h1>
+        <h1 style={{ margin: 0 }}>Pinn AI platform</h1>
         
         <p style={{
           fontSize: '1.5rem',
@@ -8641,10 +8641,10 @@ export default function Terms() {
       <h1>Terms of Service</h1>
       <div className="section">
         <h2>Acceptance of Terms</h2>
-        <p>By accessing and using Earthscan's services, you accept and agree to be bound by these Terms of Service.</p>
+        <p>By accessing and using Pinn AI's services, you accept and agree to be bound by these Terms of Service.</p>
         
         <h2>Use License</h2>
-        <p>Earthscan grants you a limited, non-exclusive, non-transferable license to use our services in accordance with these terms.</p>
+        <p>Pinn AI grants you a limited, non-exclusive, non-transferable license to use our services in accordance with these terms.</p>
         
         <h2>Data Usage</h2>
         <p>You retain all rights to your data. By using our services, you grant us the right to process your data as necessary to provide our services.</p>
@@ -8973,17 +8973,17 @@ function getOrSetFakeName() {
 
 File: src/pages/scope.md
 ==================================================
-**Scope Document: Earthscan SaaS Front-End Prototype**
+**Scope Document: Pinn AI SaaS Front-End Prototype**
 
 **Objective:**
-Create a clickable, front-end-only prototype of the Earthscan platform using React + Tailwind (or preferred stack) in Cursor. This prototype should visualize the user's journey from onboarding through data analysis results, incorporating placeholder content and navigation.
+Create a clickable, front-end-only prototype of the Pinn AI platform using React + Tailwind (or preferred stack) in Cursor. This prototype should visualize the user's journey from onboarding through data analysis results, incorporating placeholder content and navigation.
 
 ---
 
 **Pages & Flow:**
 
 1. **Landing / Login Page**
-   - Title: "Earthscan – Platform Demo"
+   - Title: "Pinn AI – Platform Demo"
    - Tagline: "Math that drills deeper"
    - Register button → navigates to Register Page
 
@@ -9059,7 +9059,7 @@ Create a clickable, front-end-only prototype of the Earthscan platform using Rea
 
 ---
 
-This document will guide the rapid prototyping of Earthscan's SaaS demo inside Cursor.
+This document will guide the rapid prototyping of Pinn AI's SaaS demo inside Cursor.
 
 
 --------------------------------------------------
@@ -10569,12 +10569,12 @@ export default function StorageSelection() {
               className="option-radio"
             />
             <label htmlFor="option2" className="option-label">
-              Option 2: Use Earthscan provided secure cloud storage
+              Option 2: Use Pinn AI provided secure cloud storage
             </label>
           </div>
           <ol className="instruction-list">
             <li>
-              The second way to make your data accessible is for Earthscan to provide you with 
+              The second way to make your data accessible is for Pinn AI to provide you with 
               a secure cloud based silo that only you will have access to. We set it up and send 
             you a temporary password which must be immediately changed. From there, only you have 
             access to your data in the secure encrypted silo provided by our cloud provider.
@@ -11135,7 +11135,7 @@ export default function Results() {
 
 File: src/pages/cursor-scope.md
 ==================================================
-# Earthscan SaaS Front-End Prototype — Cursor Build Scope
+# Pinn AI SaaS Front-End Prototype — Cursor Build Scope
 
 ---
 
@@ -11265,7 +11265,7 @@ export default function TierSelection() {
                 <strong>Your proprietary data always stays in your control.  There are two options. Mouse over the tooltip for more information.</strong>
                   <Tooltip text={`<b>Option 1</b>: Select your data via your workstation.  Our system maps to your data where is resides without modifying in any way.  We make a copy of the pertinent data at your control when you submit for processing.  All copied data is deleted immediately after processing. You maintain control of your data at all times.
 
-<b>Option 2</b>: Earthscan secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
+<b>Option 2</b>: Pinn AI secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
                 </li>
                 <li>Basic data analysis</li>
                 <li>Save, Export and Standard reporting disabled</li>
@@ -11302,7 +11302,7 @@ export default function TierSelection() {
                 <strong>Your proprietary data always stays in your control.  There are two options. Mouse over the tooltip for more information.</strong>
                   <Tooltip text={`<b>Option 1</b>: Select your data via your workstation.  Our system maps to your data where is resides without modifying in any way.  We make a copy of the pertinent data at your control when you submit for processing.  All copied data is deleted immediately after processing. You maintain control of your data at all times.
 
-<b>Option 2</b>: Earthscan secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
+<b>Option 2</b>: Pinn AI secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
                 </li>
                 <li>Enhanced data analysis</li>
                 <li>Save and Standard reporting enabled</li>
@@ -11339,7 +11339,7 @@ export default function TierSelection() {
                 <strong>Your proprietary data always stays in your control.  There are two options. Mouse over the tooltip for more information.</strong>
                   <Tooltip text={`<b>Option 1</b>: Select your data via your workstation.  Our system maps to your data where is resides without modifying in any way.  We make a copy of the pertinent data at your control when you submit for processing.  All copied data is deleted immediately after processing. You maintain control of your data at all times.
 
-<b>Option 2</b>: Earthscan secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
+<b>Option 2</b>: Pinn AI secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
                 </li>
                 <li>Advanced data analysis</li>
                 <li>Custom reporting</li>
@@ -11376,7 +11376,7 @@ export default function TierSelection() {
                 <strong>Your proprietary data always stays in your control.  There are two options. Mouse over the tooltip for more information.</strong>
                   <Tooltip text={`<b>Option 1</b>: Select your data via your workstation.  Our system maps to your data where is resides without modifying in any way.  We make a copy of the pertinent data at your control when you submit for processing.  All copied data is deleted immediately after processing. You maintain control of your data at all times.
 
-<b>Option 2</b>: Earthscan secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
+<b>Option 2</b>: Pinn AI secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
                 </li>
                 <li>Full data analysis suite</li>
                 <li>Advanced analytics</li>
@@ -11414,7 +11414,7 @@ export default function TierSelection() {
                 <strong>Your proprietary data always stays in your control.  There are two options. Mouse over the tooltip for more information.</strong>
                   <Tooltip text={`<b>Option 1</b>: Select your data via your workstation.  Our system maps to your data where is resides without modifying in any way.  We make a copy of the pertinent data at your control when you submit for processing.  All copied data is deleted immediately after processing. You maintain control of your data at all times.
 
-<b>Option 2</b>: Earthscan secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
+<b>Option 2</b>: Pinn AI secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
                 </li>
                 <li>Full data analysis suite</li>
                 <li>Advanced analytics</li>
@@ -11452,7 +11452,7 @@ export default function TierSelection() {
                 <strong>Your proprietary data always stays in your control.  There are two options. Mouse over the tooltip for more information.</strong>
                   <Tooltip text={`<b>Option 1</b>: Select your data via your workstation.  Our system maps to your data where is resides without modifying in any way.  We make a copy of the pertinent data at your control when you submit for processing.  All copied data is deleted immediately after processing. You maintain control of your data at all times.
 
-<b>Option 2</b>: Earthscan secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
+<b>Option 2</b>: Pinn AI secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
                 </li>
                 <li>Unlimited wells</li>
                 <li>Custom integrations</li>

@@ -14,7 +14,8 @@ DEFAULT_IGNORED_FOLDERS = [
     "node_modules",
     "__pycache__",
     "build",
-    "public"
+    "public",
+    "convex"
 ]
 
 DEFAULT_IGNORED_FILES = [
@@ -27,6 +28,8 @@ DEFAULT_IGNORED_FILES = [
     "README.md",
     "LICENSE",
     "NOTICE",
+    "package-lock.json",
+    "package.json"
 ]
 
 

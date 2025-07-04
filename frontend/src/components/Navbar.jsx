@@ -14,7 +14,7 @@ export default function Navbar() {
       <div className="navbar-logo" onClick={() => navigate('/')}>
         <img 
           src="/Logo.png" 
-          alt="Earthscan Logo" 
+          alt="PinnAI Logo" 
           style={{ height: '40px', cursor: 'pointer' }}
         />
       </div>

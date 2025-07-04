@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import RawDataViewer from "./RawDataViewer";
+import AnalysedDataViewer from "./AnalysedDataViewer";
 import DualViewer from "./DualSurfacePlot";
 import {
   Tabs,
@@ -92,8 +93,7 @@ export default function VoxelTabViewer() {
               <Box className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg max-w-4xl mx-auto">
                 <Typography variant="body1" className="text-gray-700">
                   <span className="font-semibold text-blue-700">Answer:</span>{" "}
-                  Displays the original dataset including spatial, geological, and production attributes from wells.
-                  Useful for exploring raw inputs.
+                  Displays the original dataset including spatial, geological information. UNK001 defines the unknown formations.
                 </Typography>
               </Box>
             
@@ -101,13 +101,12 @@ export default function VoxelTabViewer() {
 
           <TabPanel value={tabValue} index={1}>
             <Paper elevation={1} className="bg-gray-50 rounded-lg overflow-auto" sx={{ height: 400 }}>
-                <RawDataViewer />
+                <AnalysedDataViewer />
               </Paper>
             <Box className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg max-w-4xl mx-auto">
                 <Typography variant="body1" className="text-gray-700">
                   <span className="font-semibold text-blue-700">Answer:</span>{" "}
-                  Displays the original dataset including spatial, geological, and production attributes from wells.
-                  Useful for exploring raw inputs.
+                  Displays the original dataset including spatial, geological information. Unkown formations are analysed and is correlated with production data.
                 </Typography>
               </Box>
           </TabPanel>
@@ -119,8 +118,7 @@ export default function VoxelTabViewer() {
               <Box className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg max-w-4xl mx-auto">
                 <Typography variant="body1" className="text-gray-700">
                   <span className="font-semibold text-blue-700">Answer:</span>{" "}
-                  Displays the original dataset including spatial, geological, and production attributes from wells.
-                  Useful for exploring raw inputs.
+                  Displays the original production data. Unknown formations are analyzed and correlated with production data. You can create a well-drilling plan.
                 </Typography>
               </Box>
           </TabPanel>

@@ -1,8 +1,8 @@
 import React from "react";
-import VoxelViewer from "./VoxelViewerCore";
+import VoxelViewerRaw from "./VoxelViewerRaw";
 
 const RawDataViewer = () => {
-  return <VoxelViewer />;
+  return <VoxelViewerRaw />;
 };
 
 export default RawDataViewer;

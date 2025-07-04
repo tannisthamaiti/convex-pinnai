@@ -62,7 +62,7 @@ export default function TierSelection() {
                 <strong>Your proprietary data always stays in your control.  There are two options. Mouse over the tooltip for more information.</strong>
                   <Tooltip text={`<b>Option 1</b>: Select your data via your workstation.  Our system maps to your data where is resides without modifying in any way.  We make a copy of the pertinent data at your control when you submit for processing.  All copied data is deleted immediately after processing. You maintain control of your data at all times.
 
-<b>Option 2</b>: Earthscan secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
+<b>Option 2</b>: Pinn AI secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
                 </li>
                 <li>Basic data analysis</li>
                 <li>Save, Export and Standard reporting disabled</li>
@@ -99,7 +99,7 @@ export default function TierSelection() {
                 <strong>Your proprietary data always stays in your control.  There are two options. Mouse over the tooltip for more information.</strong>
                   <Tooltip text={`<b>Option 1</b>: Select your data via your workstation.  Our system maps to your data where is resides without modifying in any way.  We make a copy of the pertinent data at your control when you submit for processing.  All copied data is deleted immediately after processing. You maintain control of your data at all times.
 
-<b>Option 2</b>: Earthscan secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
+<b>Option 2</b>: Pinn AI secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
                 </li>
                 <li>Enhanced data analysis</li>
                 <li>Save and Standard reporting enabled</li>
@@ -136,7 +136,7 @@ export default function TierSelection() {
                 <strong>Your proprietary data always stays in your control.  There are two options. Mouse over the tooltip for more information.</strong>
                   <Tooltip text={`<b>Option 1</b>: Select your data via your workstation.  Our system maps to your data where is resides without modifying in any way.  We make a copy of the pertinent data at your control when you submit for processing.  All copied data is deleted immediately after processing. You maintain control of your data at all times.
 
-<b>Option 2</b>: Earthscan secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
+<b>Option 2</b>: Pinn AI secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
                 </li>
                 <li>Advanced data analysis</li>
                 <li>Custom reporting</li>
@@ -173,7 +173,7 @@ export default function TierSelection() {
                 <strong>Your proprietary data always stays in your control.  There are two options. Mouse over the tooltip for more information.</strong>
                   <Tooltip text={`<b>Option 1</b>: Select your data via your workstation.  Our system maps to your data where is resides without modifying in any way.  We make a copy of the pertinent data at your control when you submit for processing.  All copied data is deleted immediately after processing. You maintain control of your data at all times.
 
-<b>Option 2</b>: Earthscan secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
+<b>Option 2</b>: Pinn AI secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
                 </li>
                 <li>Full data analysis suite</li>
                 <li>Advanced analytics</li>
@@ -211,7 +211,7 @@ export default function TierSelection() {
                 <strong>Your proprietary data always stays in your control.  There are two options. Mouse over the tooltip for more information.</strong>
                   <Tooltip text={`<b>Option 1</b>: Select your data via your workstation.  Our system maps to your data where is resides without modifying in any way.  We make a copy of the pertinent data at your control when you submit for processing.  All copied data is deleted immediately after processing. You maintain control of your data at all times.
 
-<b>Option 2</b>: Earthscan secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
+<b>Option 2</b>: Pinn AI secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
                 </li>
                 <li>Full data analysis suite</li>
                 <li>Advanced analytics</li>
@@ -249,7 +249,7 @@ export default function TierSelection() {
                 <strong>Your proprietary data always stays in your control.  There are two options. Mouse over the tooltip for more information.</strong>
                   <Tooltip text={`<b>Option 1</b>: Select your data via your workstation.  Our system maps to your data where is resides without modifying in any way.  We make a copy of the pertinent data at your control when you submit for processing.  All copied data is deleted immediately after processing. You maintain control of your data at all times.
 
-<b>Option 2</b>: Earthscan secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
+<b>Option 2</b>: Pinn AI secure cloud silo - At your selection (next page) we immediately create a cloud-based silo for your data.  Your data is encrypted and accessible only by you.  When setup is complete, your are emailed a temporary password that must be changed upon first login.  We never see your data nor do we have access to it.  As above, you select your data and it is uploaded into the silo for your use only.`} />
                 </li>
                 <li>Unlimited wells</li>
                 <li>Custom integrations</li>

@@ -88,12 +88,12 @@ export default function StorageSelection() {
               className="option-radio"
             />
             <label htmlFor="option2" className="option-label">
-              Option 2: Use Earthscan provided secure cloud storage
+              Option 2: Use Pinn AI provided secure cloud storage
             </label>
           </div>
           <ol className="instruction-list">
             <li>
-              The second way to make your data accessible is for Earthscan to provide you with 
+              The second way to make your data accessible is for Pinn AI to provide you with 
               a secure cloud based silo that only you will have access to. We set it up and send 
             you a temporary password which must be immediately changed. From there, only you have 
             access to your data in the secure encrypted silo provided by our cloud provider.

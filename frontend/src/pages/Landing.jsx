@@ -12,6 +12,11 @@ export default function Landing() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+      <img
+    src="/Logo.png"          /* put your file path here */
+    alt="Site logo"
+    className="w-32 mb-6"    /* width + space below */
+     />
       <main className="flex flex-col items-center justify-center flex-1 px-4 py-16">
         <h1 className="text-4xl font-bold mb-6 text-center">Math that drills</h1>
 
@@ -25,7 +30,7 @@ export default function Landing() {
           </button>
         </SignedIn>
 
-        <Unauthenticated>
+        <SignedOut>
           <div className="flex flex-col gap-4 w-80">
             <p className="text-center">Sign in or register to continue</p>
             <SignInButton mode="modal">
@@ -39,7 +44,7 @@ export default function Landing() {
               </button>
             </SignUpButton>
           </div>
-        </Unauthenticated>
+        </SignedOut>
       </main>
     </div>
   );
