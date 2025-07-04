@@ -31,18 +31,7 @@ export default function Navbar() {
         >
           Dashboard
         </button>
-        <button 
-          className={`nav-link ${location.pathname === '/upload' ? 'active' : ''}`}
-          onClick={() => navigate('/upload')}
-        >
-          Select Data
-        </button>
-         <button 
-          className={`nav-link ${location.pathname === '/roi' ? 'active' : ''}`}
-          onClick={() => navigate('/roi')}
-        >
-          ROI Calculator
-        </button>
+       
       </div>
       {/* ---------- Auth Controls ---------- */}
         <div className="navbar-auth flex items-center gap-2">
