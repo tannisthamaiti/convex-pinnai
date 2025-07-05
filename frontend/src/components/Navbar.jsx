@@ -1,45 +1,55 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
-  Authenticated,
-  Unauthenticated,
-} from "convex/react";
-import { SignInButton, SignUpButton, UserButton,SignedIn, SignedOut } from "@clerk/clerk-react";
+  SignedIn,
+  SignedOut,
+  UserButton,
+  SignInButton,
+  SignUpButton
+} from "@clerk/clerk-react";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
   return (
-    <nav className="navbar">
-      <div className="navbar-logo" onClick={() => navigate('/')}>
-        <img 
-          src="/Logo.png" 
-          alt="PinnAI Logo" 
+    <nav className="flex items-center justify-between px-6 py-3 bg-white shadow">
+      {/* Left: Logo */}
+      <div className="flex items-center">
+        <img
+          src="/Logo.png"
+          alt="PinnAI Logo"
           style={{ height: '40px', cursor: 'pointer' }}
+          onClick={() => navigate('/')}
         />
       </div>
-      <div className="navbar-links">
-        <button 
-          className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+
+      {/* Right: Nav links + Profile */}
+      <div className="flex items-center gap-6">
+        <button
+          className={`text-sm font-medium hover:text-blue-600 ${
+            location.pathname === '/' ? 'text-blue-600 underline' : ''
+          }`}
           onClick={() => navigate('/')}
         >
           Home
         </button>
-        <button 
-          className={`nav-link ${location.pathname === '/dashboard' ? 'active' : ''}`}
+        <button
+          className={`text-sm font-medium hover:text-blue-600 ${
+            location.pathname === '/dashboard' ? 'text-blue-600 underline' : ''
+          }`}
           onClick={() => navigate('/dashboard')}
         >
           Dashboard
         </button>
-       
-      </div>
-      {/* ---------- Auth Controls ---------- */}
-        <div className="navbar-auth flex items-center gap-2">
-        {/* Avatar dropdown when signed-in */}
+
+        {/* Auth controls */}
         <SignedIn>
           <UserButton afterSignOutUrl="/" />
         </SignedIn>
-
+        <SignedOut>
+          <SignInButton />
+          <SignUpButton />
+        </SignedOut>
       </div>
     </nav>
   );

@@ -1,8 +1,3 @@
-// Dashboard.jsx — Material-UI + Tailwind hybrid
-// - Live Total-Datasets fetched from /upload
-// - Mock values for Data-Quality, Active-Models, Processing-Jobs
-// - Build-log runner + ClusteringCard + Tools/Results grids + Chat panel
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -18,6 +13,8 @@ import {
   CircularProgress,
   LinearProgress,
   Chip,
+  Breadcrumbs,
+  Link as MuiLink,
 } from "@mui/material";
 import {
   BarChart,
@@ -38,6 +35,11 @@ import {
 } from "@mui/icons-material";
 import ConvexChat from "./ConvexChat";
 import ClusteringCard from "../components/ClusteringCard";
+import PipelineStatusCard from "../components/PipelineStatusCard";
+import {
+  HourglassEmpty,
+  RadioButtonUnchecked,
+} from "@mui/icons-material";
 
 // -----------------------------------------------------------------------------
 // Backend routes – change here only
@@ -48,6 +50,8 @@ const URLS = {
   sparsityCheck: "https://etscan.org/sparsity-check",
   pcaPlot: "https://etscan.org/pca-plot/",
 };
+
+
 
 // helper to prepend a timestamp to log lines
 const withTs = (msg) =>
@@ -115,15 +119,34 @@ export default function Dashboard() {
     }
   };
 
-  // --------------------------------------------------------------------------
-  // JSX
-  // --------------------------------------------------------------------------
+ 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
       <div className="max-w-7xl mx-auto relative">
+        {/* ───────────── Breadcrumb nav ───────────── */}
+        <Box mb={1}>
+          <Breadcrumbs aria-label="breadcrumb" separator="›">
+            <MuiLink
+              underline="hover"
+              color="inherit"
+              sx={{ cursor: "pointer" }}
+              onClick={() => navigate("/")}
+            >
+              Home
+            </MuiLink>
+            <MuiLink
+              underline="hover"
+              color="text.primary"
+              sx={{ cursor: "pointer" }}
+              onClick={() => navigate("/dashboard")}
+            >
+              Dashboard
+            </MuiLink>
+          </Breadcrumbs>
+        </Box>
         {/* ───────────── Heading ───────────── */}
         <Typography variant="h4" fontWeight={700}>
-          MLOps Dashboard
+          Well Analytics Dashboard
         </Typography>
         <Typography variant="body2" color="textSecondary" mb={3}>
           Comprehensive machine-learning operations platform for data processing and model
@@ -148,7 +171,6 @@ export default function Dashboard() {
               <CardContent>
                 <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
                   <Typography variant="subtitle2">Total Datasets</Typography>
-                  <Storage fontSize="small" />
                 </Box>
                 <Typography variant="h5" fontWeight={600}>{stats.datasets}</Typography>
                 <Typography variant="caption" color="textSecondary">
@@ -168,7 +190,6 @@ export default function Dashboard() {
               <CardContent>
                 <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
                   <Typography variant="subtitle2">ROI Calculator</Typography>
-                  <Storage fontSize="small" />
                 </Box>
                 <Typography variant="h5" fontWeight={600}>{stats.datasets}</Typography>
                 <Typography variant="caption" color="textSecondary">
@@ -184,7 +205,7 @@ export default function Dashboard() {
               <CardContent>
                 <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
                   <Typography variant="subtitle2">Data Quality</Typography>
-                  <CheckCircleOutline color="success" fontSize="small" />
+                  
                 </Box>
                 <Typography variant="h5" fontWeight={600}>94%</Typography>
                 <LinearProgress variant="determinate" value={94} sx={{ height: 3, borderRadius: 1, mt: 1 }} />
@@ -198,7 +219,7 @@ export default function Dashboard() {
               <CardContent>
                 <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
                   <Typography variant="subtitle2">Active Models</Typography>
-                  <TrendingUp fontSize="small" />
+                  
                 </Box>
                 <Typography variant="h5" fontWeight={600}>8</Typography>
                 <Typography variant="caption" color="textSecondary">3 in production</Typography>
@@ -212,7 +233,7 @@ export default function Dashboard() {
               <CardContent>
                 <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
                   <Typography variant="subtitle2">Processing Jobs</Typography>
-                  <WarningAmber color="warning" fontSize="small" />
+                  
                 </Box>
                 <Typography variant="h5" fontWeight={600}>3</Typography>
                 <Typography variant="caption" color="textSecondary">2 running, 1 queued</Typography>
@@ -221,7 +242,8 @@ export default function Dashboard() {
           </Grid>
         </Grid>
 
-
+      {/* ─── Pipeline status ─────────────────────────────────────────────── */}
+      <PipelineStatusCard />
         {/* ───────────── Build-logs & processing ───────────── */}
         <Card className="mb-8 shadow-lg">
           <CardHeader
@@ -345,14 +367,14 @@ export default function Dashboard() {
               icon: <Map />,
               title: "Well Planning Insights",
               desc: "Guide drilling with formation & production analysis",
-              route: "/planning",
+              route: "/voxel",
               ctaColor: "inherit",
             },
             {
               icon: <FlashOn />,
               title: "Vug Analysis",
               desc: "Interpret porous zones using AI-enhanced inference",
-              route: "/vugs",
+              route: "/ask-image",
               ctaColor: "error",
             },
           ].map((r) => (
